@@ -1,0 +1,14 @@
+apply plugin: 'java'
+
+repositories{
+    mavenCentral()
+}
+
+project.ext{
+    dropWizardVersion = '0.7.0-rc2'
+}
+
+dependencies{
+    compile "io.dropwizard:dropwizard-core:${dropWizardVersion}"
+    compile "io.dropwizard:dropwizard-assets:${dropWizardVersion}"
+}

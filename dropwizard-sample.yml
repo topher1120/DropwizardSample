@@ -1,0 +1,6 @@
+template: Hello, %s!
+defaultName: Stranger2
+
+#server:
+#   type: simple
+#   applicationContextPath: /application

@@ -1,4 +1,19 @@
+defaultTasks "clean", "build", "shadowJar"
+
+version = "1.0"
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:0.8'
+        classpath 'org.ajoberstar:gradle-git:0.6.1'
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'shadow'
 
 repositories{
     mavenCentral()
@@ -12,3 +27,38 @@ dependencies{
     compile "io.dropwizard:dropwizard-core:${dropWizardVersion}"
     compile "io.dropwizard:dropwizard-assets:${dropWizardVersion}"
 }
+
+shadow {
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+
+    outputFile = file("$buildDir/distributions/${project.name}.$extension")
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.cmware.dw.example.ExampleApplication',
+        'Implementation-Title': "${project.name} Application",
+        'Implementation-Version' : "${project.version}",
+        'Built-By' : System.getProperty('user.name'),
+        'Built-JDK' : System.getProperty('java.version')
+    }
+}
+
+task findGitVersion(type: org.ajoberstar.gradle.git.tasks.GitLog){
+    repoPath = "$rootDir"
+    maxCommits = 1
+    doLast{
+        log.each {
+            def gitSHA = it.id
+            def shaAbbr = it.abbreviatedId
+            jar{
+                manifest{
+                    attributes 'Git-Commit' : gitSHA, 'Git-Commit-Abbr': shaAbbr
+                }
+            }
+        }
+    }
+}
+
+jar.dependsOn findGitVersion

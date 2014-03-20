@@ -7,4 +7,5 @@ This project is a sample app of me trying out different features and integration
 * Webjars integration to get Bootstrap and AngularJS working
 * Google Guice to manage my Jersey Resource classes and dependencies
 * Websocket integration for having a POC between this and an Angular ui.
+* Swagger integration for API documentation
 * Deploy POC to Heroku

@@ -26,6 +26,7 @@ project.ext{
 dependencies{
     compile "io.dropwizard:dropwizard-core:${dropWizardVersion}"
     compile "io.dropwizard:dropwizard-assets:${dropWizardVersion}"
+    compile 'org.webjars:bootstrap:3.1.1'
 }
 
 shadow {

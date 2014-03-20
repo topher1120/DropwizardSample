@@ -25,8 +25,11 @@ public class ExampleApplication extends Application<ExampleAppConfiguration>
     @Override
     public void initialize(Bootstrap<ExampleAppConfiguration> bootstrap)
     {
-        //bootstrap.addBundle(new AssetsBundle("/assets", "/", "index.html"));
         bootstrap.addBundle(new AssetsBundle("/assets", "/", "index.html"));
+        // When using multiple AssetsBundle objects, you MUST set the asset name for the subsequent bundles.
+        // Otherwise, the last bundle wins and gets mapped to all the paths of the previous bundles with
+        // the same name.
+        bootstrap.addBundle(new AssetsBundle("/META-INF/resources/webjars", "/webjars", "index.htm", "WebjarsAssets"));
     }
 
     @Override

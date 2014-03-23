@@ -2,8 +2,11 @@ package com.cmware.dw.example;
 
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.auth.basic.BasicAuthProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import com.cmware.dw.example.auth.SimpleAuthenticator;
+import com.cmware.dw.example.domain.User;
 import com.cmware.dw.example.resources.HelloResource;
 import com.wordnik.swagger.config.ConfigFactory;
 import com.wordnik.swagger.config.ScannerFactory;
@@ -49,10 +52,16 @@ public class ExampleApplication extends Application<ExampleAppConfiguration>
     public void run(ExampleAppConfiguration configuration, Environment environment) throws Exception
     {
         addSwaggerConfig(environment);
+        addAuthentication(environment);
 
         environment.jersey().setUrlPattern("/service/*");
         final HelloResource resource = new HelloResource(configuration.getTemplate(), configuration.getDefaultName());
         environment.jersey().register(resource);
+    }
+
+    private void addAuthentication(Environment environment)
+    {
+        environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(), "exampleApp"));
     }
 
     private void addSwaggerConfig(Environment environment)

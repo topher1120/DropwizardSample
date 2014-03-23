@@ -1,6 +1,8 @@
 package com.cmware.dw.example.resources;
 
+import io.dropwizard.auth.Auth;
 import org.apache.commons.lang.StringUtils;
+import com.cmware.dw.example.domain.User;
 import com.cmware.dw.example.representations.HelloStatement;
 import com.codahale.metrics.annotation.Timed;
 import com.google.common.base.Optional;
@@ -37,7 +39,7 @@ public class HelloResource
     @Timed
     public HelloStatement hello(
             @ApiParam(value = "name to say hello to", required = false, defaultValue = "Stranger")
-            @QueryParam("name")String name){
+            @QueryParam("name")String name, @Auth User user){
         final String value = String.format(template, StringUtils.defaultIfBlank(name, defaultName));
         return new HelloStatement(counter.incrementAndGet(), value);
     }

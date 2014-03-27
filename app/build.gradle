@@ -1,0 +1,25 @@
+apply plugin: 'application'
+
+project.ext{
+    dropWizardVersion = '0.7.0-rc2'
+}
+
+applicationName = 'dropwizardSample'
+mainClassName = 'com.cmware.dw.example.ExampleApplication'
+
+dependencies{
+    compile project(':ui')
+    compile "io.dropwizard:dropwizard-core:${dropWizardVersion}"
+    compile "io.dropwizard:dropwizard-assets:${dropWizardVersion}"
+    compile "io.dropwizard:dropwizard-auth:${dropWizardVersion}"
+    compile 'com.wordnik:swagger-jaxrs_2.10:1.3.2'
+
+    //swagger ui, loaded via webjars.
+    compile 'org.webjars:swagger-ui:2.0.12'
+}
+
+applicationDistribution.into('conf'){
+    from("$projectDir"){
+        include '*.yml'
+    }
+}

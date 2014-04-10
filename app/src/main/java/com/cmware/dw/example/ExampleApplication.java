@@ -7,7 +7,6 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import com.cmware.dw.example.auth.SimpleAuthenticator;
 import com.cmware.dw.example.domain.User;
-import com.cmware.dw.example.resources.HelloResource;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 import com.wordnik.swagger.config.ConfigFactory;
 import com.wordnik.swagger.config.ScannerFactory;
@@ -58,6 +57,7 @@ public class ExampleApplication extends Application<ExampleAppConfiguration>
         addAuthentication(environment);
 
         environment.jersey().setUrlPattern("/service/*");
+        environment.getAdminContext().setInitParameter("com.codahale.metrics.servlets.MetricsServlet.durationUnit", "milliseconds");
         //final HelloResource resource = new HelloResource(configuration.getTemplate(), configuration.getDefaultName());
         //environment.jersey().register(resource);
     }

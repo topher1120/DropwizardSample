@@ -1,7 +1,7 @@
 apply plugin: 'application'
 
 project.ext{
-    dropWizardVersion = '0.7.0-rc2'
+    dropWizardVersion = '0.7.0'
 }
 
 applicationName = 'dropwizardSample'

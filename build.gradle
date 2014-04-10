@@ -14,12 +14,11 @@ buildscript {
 
 defaultTasks "clean", "build"
 
-
-group = "com.drsample.hello"
-
 allprojects{
     apply plugin: 'wrapper'
     apply plugin: 'eclipse'
+
+    group = "com.drsample.hello"
 }
 
 subprojects{

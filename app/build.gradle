@@ -12,6 +12,11 @@ dependencies{
     compile "io.dropwizard:dropwizard-core:${dropWizardVersion}"
     compile "io.dropwizard:dropwizard-assets:${dropWizardVersion}"
     compile "io.dropwizard:dropwizard-auth:${dropWizardVersion}"
+
+    //add guice integration for dropwizard.
+    compile 'com.hubspot.dropwizard:dropwizard-guice:0.7.0'
+
+    //add swagger for api documentation.
     compile 'com.wordnik:swagger-jaxrs_2.10:1.3.2'
 
     //swagger ui, loaded via webjars.

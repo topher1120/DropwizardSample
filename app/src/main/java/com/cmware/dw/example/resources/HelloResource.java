@@ -9,6 +9,8 @@ import com.google.common.base.Optional;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -28,7 +30,8 @@ public class HelloResource
     private final String defaultName;
     private final AtomicLong counter = new AtomicLong();
 
-    public HelloResource(String template, String defaultName)
+    @Inject
+    public HelloResource(@Named("helloTemplate") String template, @Named("helloDefault") String defaultName)
     {
         this.template = template;
         this.defaultName = defaultName;

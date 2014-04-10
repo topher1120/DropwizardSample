@@ -8,6 +8,7 @@ import io.dropwizard.setup.Environment;
 import com.cmware.dw.example.auth.SimpleAuthenticator;
 import com.cmware.dw.example.domain.User;
 import com.cmware.dw.example.resources.HelloResource;
+import com.hubspot.dropwizard.guice.GuiceBundle;
 import com.wordnik.swagger.config.ConfigFactory;
 import com.wordnik.swagger.config.ScannerFactory;
 import com.wordnik.swagger.config.SwaggerConfig;
@@ -46,6 +47,8 @@ public class ExampleApplication extends Application<ExampleAppConfiguration>
         //add swagger to root
         bootstrap.addBundle(new AssetsBundle("/META-INF/resources/webjars/swagger-ui/2.0.12", "/swagger", "index.html",
                 "swaggerAssets"));
+
+        initGuice(bootstrap);
     }
 
     @Override
@@ -55,8 +58,8 @@ public class ExampleApplication extends Application<ExampleAppConfiguration>
         addAuthentication(environment);
 
         environment.jersey().setUrlPattern("/service/*");
-        final HelloResource resource = new HelloResource(configuration.getTemplate(), configuration.getDefaultName());
-        environment.jersey().register(resource);
+        //final HelloResource resource = new HelloResource(configuration.getTemplate(), configuration.getDefaultName());
+        //environment.jersey().register(resource);
     }
 
     private void addAuthentication(Environment environment)
@@ -82,5 +85,14 @@ public class ExampleApplication extends Application<ExampleAppConfiguration>
         SwaggerConfig config = ConfigFactory.config();
         config.setApiVersion("1.0");
         config.setBasePath("http://localhost:8080/service");
+    }
+
+    private void initGuice(Bootstrap<ExampleAppConfiguration> bootstrap)
+    {
+        GuiceBundle<ExampleAppConfiguration> guiceBundle = GuiceBundle.<ExampleAppConfiguration>newBuilder()
+                .addModule(new HelloWorldModule()).enableAutoConfig(getClass().getPackage().getName())
+                .setConfigClass(ExampleAppConfiguration.class).build();
+
+        bootstrap.addBundle(guiceBundle);
     }
 }
